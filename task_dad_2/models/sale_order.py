@@ -16,12 +16,13 @@ class SaleOrder(models.Model):
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    @api.constrains('phone')
+    @api.onchange('phone')
     def phone_validation(self):
         partners = self.search([])
         for partner in partners:
-            if partner.phone == self.phone:
-                raise ValidationError('The Phone Number already Exist')
+            if partner.phone and self.phone:
+                if partner.phone == self.phone:
+                    raise ValidationError('The Phone Number already Exist')
 
     @api.constrains('phone')
     def check_phone(self):
