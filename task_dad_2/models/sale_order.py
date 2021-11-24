@@ -16,7 +16,7 @@ class SaleOrder(models.Model):
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    @api.onchange('phone')
+    @api.constrains('phone')
     def phone_validation(self):
         partners = self.search([])
         for partner in partners:
